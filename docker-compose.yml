@@ -1,6 +1,10 @@
 version: "3.8"
 services:
   web:
+    build:
+      context: ./
+      target: runner
+      dockerfile: Dockerfile
     volumes:
       - .:/app
     command: npm run dev
