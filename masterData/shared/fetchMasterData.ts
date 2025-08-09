@@ -1,3 +1,4 @@
+import { masterDataMock } from "./masterDataMock";
 import { ErrorResponse, GetAllListsResponse } from "./types";
 
 const url = new URL("/api", "http://localhost:4000");
@@ -35,7 +36,10 @@ export const fetchMasterData = async (): Promise<
   });
 
   if (!response.ok) {
-    throw Error("[GET ALL LISTS] Service failed");
+    // throw Error("[GET ALL LISTS] Service failed");
+    console.error("[GET ALL LISTS] Service failed");
+
+    return masterDataMock;
   }
 
   const data = (await response.json()) as ErrorResponse | GetAllListsResponse;
