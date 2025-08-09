@@ -3,7 +3,6 @@ services:
   web:
     build:
       context: ./
-      target: runner
       dockerfile: Dockerfile
     volumes:
       - .:/app
