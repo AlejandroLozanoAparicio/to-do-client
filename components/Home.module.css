@@ -1,0 +1,18 @@
+.wrapper {
+  padding: 32px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-block-start: 32px;
+}
+
+.item {
+  list-style-type: none;
+}
+
+.emptyListText {
+  margin-block: 16px;
+}
