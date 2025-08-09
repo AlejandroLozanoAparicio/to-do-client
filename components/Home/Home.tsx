@@ -6,20 +6,16 @@ import Link from "next/link";
 export const Home = () => {
   const { lists } = getMasterData();
 
-  // const allTasks: Task[] = lists.reduce((acc: Task[], current: List) => {
-  //   return [...acc, ...current.tasks];
-  // }, []);
-
   return (
     <div className={styles.wrapper}>
       <h1>All</h1>
-      {lists.map((list) => {
-        const { tasks } = list;
-        const hasTasks = tasks.length > 0;
+      <ul className={styles.list}>
+        {lists.map((list) => {
+          const { tasks } = list;
+          const hasTasks = tasks.length > 0;
 
-        return (
-          <ul className={styles.list}>
-            <li>
+          return (
+            <li key={`list.${list.id}.allTasks`}>
               <h2>
                 <Link href={`/list/${list.id}`}>{list.name}</Link>
               </h2>
@@ -28,7 +24,7 @@ export const Home = () => {
                   {list.tasks.map((task) => (
                     <li
                       className={styles.item}
-                      key={`allTasks.task.${task.id}`}
+                      key={`list.${list.id}.task.${task.id}`}
                     >
                       {task.title}
                     </li>
@@ -40,9 +36,9 @@ export const Home = () => {
                 </p>
               )}
             </li>
-          </ul>
-        );
-      })}
+          );
+        })}
+      </ul>
     </div>
   );
 };

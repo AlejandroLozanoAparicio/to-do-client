@@ -1,3 +1,4 @@
+import { masterDataMock } from "./masterDataMock";
 import { ErrorResponse, GetAllListsResponse } from "./types";
 
 const url = new URL("/api", "http://localhost:4000");
@@ -26,23 +27,32 @@ const body = {
 export const fetchMasterData = async (): Promise<
   GetAllListsResponse | undefined
 > => {
-  const response = await fetch(url.href, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(body),
-  });
+  try {
+    const response = await fetch(url.href, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
 
-  if (!response.ok) {
-    throw Error("[GET ALL LISTS] Service failed");
+    if (!response.ok) {
+      // throw Error("[GET ALL LISTS] Service failed");
+      console.log("[GET ALL LISTS] Service failed");
+
+      return masterDataMock;
+    }
+
+    const data = (await response.json()) as ErrorResponse | GetAllListsResponse;
+
+    if (Object.hasOwn(data, "errors")) {
+      throw Error("[GET ALL LISTS] Errors in response");
+    }
+
+    return data as GetAllListsResponse;
+  } catch {
+    console.log("[GET ALL LISTS] Service failed");
+
+    return masterDataMock;
   }
-
-  const data = (await response.json()) as ErrorResponse | GetAllListsResponse;
-
-  if (Object.hasOwn(data, "errors")) {
-    throw Error("[GET ALL LISTS] Errors in response");
-  }
-
-  return data as GetAllListsResponse;
 };
